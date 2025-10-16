@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ahmedit — Fotoğraf & Video Edit</title>
+  <style>
+    :root{--bg:#0b0b0b;--card:#111;--text:#eee;--muted:#9aa;--accent:#7c5cff}
+    [data-theme="light"]{--bg:#f6f7fb;--card:#fff;--text:#111;--muted:#556;--accent:#5b6cff}
+    *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Arial}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#000);color:var(--text);min-height:100vh}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:transparent}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#22b3ff);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .brand h1{margin:0;font-size:18px}
+    nav{display:flex;gap:12px}
+    a.btn{background:var(--card);padding:8px 12px;border-radius:10px;color:var(--text);text-decoration:none;border:1px solid rgba(255,255,255,0.03)}
+    main{padding:28px}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
+    .hero .intro{max-width:720px}
+    .hero h2{font-size:36px;margin:0 0 12px}
+    .hero p{color:var(--muted);margin:0 0 18px}
+    .controls{display:flex;gap:10px}
+    .card{background:var(--card);padding:16px;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+    .gallery img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+    form{display:flex;flex-direction:column;gap:10px}
+    input,textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:8px;color:var(--text)}
+    .small{font-size:13px;color:var(--muted)}
+    .row{display:flex;gap:10px}
+    footer{Padding:18px 28px;color:var(--muted)}
+    .theme-toggle{cursor:pointer;padding:8px;border-radius:10px}
+    /* admin list */
+    .orders{display:flex;flex-direction:column;gap:10px}
+    .order{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px;border-radius:8px;background:linear-gradient(90deg,rgba(0,0,0,0.12),transparent)}
+    .pill{padding:6px 8px;border-radius:999px;font-size:13px}
+    .status-pending{background:#3a3a3a}
+    .status-doing{background:#6a5cff}
+    .status-done{background:#2dca73}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)} }
+  </style>
+</head>
+<body data-theme="dark">
+  <header>
+    <div class="brand">
+      <div class="logo">A</div>
+      <div>
+        <h1>Ahmedit</h1>
+        <div class="small">Fotoğraf & Video Edit Hizmetleri</div>
+      </div>
+    </div>
+    <nav>
+      <a class="btn" href="#gallery">Galeri</a>
+      <a class="btn" href="#order">Sipariş Ver</a>
+      <a class="btn" href="#contact">İletişim</a>
+      <div class="theme-toggle btn" id="themeBtn">Tema</div>
+      <a class="btn" id="loginBtn">Giriş / Kayıt</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="intro">
+        <h2>Profesyonel fotoğraf ve video düzenleme — Ahmedit</h2>
+        <p>Hızlı, modern ve güvenli servis. Sipariş oluştur, özelliklerini yaz, biz düzenleyip geri gönderelim. Memnun kalmazsan paran iade edilir.</p>
+        <div class="controls">
+          <button class="btn" id="startOrder">Hemen Sipariş Ver</button>
+          <a class="btn" href="#contact">Bize Ulaş</a>
+        </div>
+        <div style="margin-top:18px" class="card">
+          <div class="small">Nasıl çalışır (kısa):</div>
+          <ol class="small">
+            <li>Kullanıcı hesap oluşturur (e-posta ile)</li>
+            <li>Sipariş formunu doldurur ve ödeme bağlantısı ile ödemeyi yapar</li>
+            <li>Sen siparişi alır, 1-2 gün içinde düzenleme tamamlanır</li>
+            <li>Müşteri memnun ise dosyayı teslim alır; değilse iade süreci başlatılır</li>
+          </ol>
+          <div class="small" style="margin-top:8px">Ödeme: sitede kart bilgisi tutulmaz — ödeme sağlayıcı (örn. Shopier / iyzico) ile link kullanılır.</div>
+        </div>
+      </div>
+      <aside class="card">
+        <h3 style="margin:0">Örnek Galeri</h3>
+        <div class="gallery" id="gallery">
+          <img src="https://picsum.photos/seed/a/400/300" alt="örnek">
+          <img src="https://picsum.photos/seed/b/400/300" alt="örnek">
+          <img src="https://picsum.photos/seed/c/400/300" alt="örnek">
+          <img src="https://picsum.photos/seed/d/400/300" alt="örnek">
+          <img src="https://picsum.photos/seed/e/400/300" alt="örnek">
+          <img src="https://picsum.photos/seed/f/400/300" alt="örnek">
+        </div>
+      </aside>
+    </section>
+
+    <section id="order" style="margin-top:24px">
+      <div class="card">
+        <h3>Sipariş Formu</h3>
+        <form id="orderForm">
+          <input type="text" id="orderTitle" placeholder="Sipariş Başlığı (ör. Portre Renk Düzeltme)" required>
+          <textarea id="orderDesc" placeholder="Siparişin detaylarını yaz (istediğin değişiklikler, referans linkleri)" rows="4" required></textarea>
+          <div class="row">
+            <input id="deliveryTime" placeholder="Teslim süresi beklentisi (ör. 2 gün)" required>
+            <select id="serviceType"><option value="photo">Fotoğraf Düzenleme</option><option value="video">Video Düzenleme</option></select>
+          </div>
+          <div class="small">Dosya yüklemeleri demo olarak burada tutulmaz. Gerçek yayında dosya upload için sunucu + depolama (S3, Cloudinary vb.) gereklidir.</div>
+          <label class="small">Fiyat teklifini onayla</label>
+          <input type="number" id="price" placeholder="Fiyat (TL)" required>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" id="payBtn" type="button">Ödeme Bağlantısına Git</button>
+            <button class="btn" id="saveOrder" type="button">Siparişi Oluştur (Ödeme Sonrası İşaretle)</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="account" style="margin-top:18px">
+      <div class="card">
+        <h3>Hesaplar & Yönetim (demo)</h3>
+        <div class="row">
+          <button class="btn" id="openAccounts">Hesapları Gör</button>
+          <button class="btn" id="openOrders">Siparişleri Gör (admin)</button>
+        </div>
+        <div style="margin-top:12px" id="adminArea"></div>
+      </div>
+    </section>
+
+    <section id="contact" style="margin-top:18px">
+      <div class="card">
+        <h3>İletişim</h3>
+        <div class="small">E-posta: <a href="mailto:talhag3109@gmail.com">talhag3109@gmail.com</a></div>
+        <div class="small">Instagram: (sonra eklenecek)</div>
+      </div>
+    </section>
+
+  </main>
+  <footer>
+    Ahmedit — © <span id="year"></span> · Demo prototip. Ödeme entegrasyonu için Shopier veya iyzico gibi sağlayıcılar kullan.
+  </footer>
+
+<script>
+  document.getElementById('year').textContent=new Date().getFullYear();
+  const themeBtn=document.getElementById('themeBtn');
+  const body=document.body;
+  function setTheme(t){body.setAttribute('data-theme',t);localStorage.setItem('ah_theme',t)}
+  themeBtn.addEventListener('click',()=>{setTheme(body.getAttribute('data-theme')==='dark'?'light':'dark')});
+  const savedTheme=localStorage.getItem('ah_theme')||'dark';setTheme(savedTheme);
+
+  // Simple localStorage-based auth (demo). Do NOT use in production.
+  const USERS_KEY='ah_users_v1';const ORDERS_KEY='ah_orders_v1';
+  function getUsers(){return JSON.parse(localStorage.getItem(USERS_KEY)||'[]')}
+  function saveUsers(u){localStorage.setItem(USERS_KEY,JSON.stringify(u))}
+  function getOrders(){return JSON.parse(localStorage.getItem(ORDERS_KEY)||'[]')}
+  function saveOrders(o){localStorage.setItem(ORDERS_KEY,JSON.stringify(o))}
+
+  // Quick modal login/register
+  document.getElementById('loginBtn').addEventListener('click',()=>{
+    const email=prompt('E-posta adresini gir (demo):'); if(!email) return; const users=getUsers();
+    let u=users.find(x=>x.email===email); if(!u){u={email,created:Date.now()};users.push(u);saveUsers(users);alert('Hesap oluşturuldu. Giriş yapıldı.');}
+    else alert('Giriş başarılı.');
+    localStorage.setItem('ah_current',email);
+  });
+
+  document.getElementById('startOrder').addEventListener('click',()=>{location.hash='#order';window.scrollTo(0,document.getElementById('order').offsetTop-20)})
+
+  // Order flows
+  document.getElementById('saveOrder').addEventListener('click',()=>{
+    const current=localStorage.getItem('ah_current'); if(!current){alert('Lütfen önce giriş yap (e-posta).');return}
+    const title=document.getElementById('orderTitle').value.trim();
+    const desc=document.getElementById('orderDesc').value.trim();
+    const price=document.getElementById('price').value||0; const service=document.getElementById('serviceType').value;
+    if(!title||!desc||!price){alert('Tüm alanları doldur.');return}
+    const orders=getOrders(); const id='ord_'+Date.now();
+    const order={id,owner:current,title,desc,price,service,created:Date.now(),status:'pending'}; orders.push(order); saveOrders(orders);
+    alert('Sipariş oluşturuldu. Ödeme yapıldıktan sonra durumu "onaylandı" olarak işaretleyin (demo).');
+  });
+
+  // Payment button: in production replace the url with real Shopier/iyzico payment link or virtual POS flow
+  document.getElementById('payBtn').addEventListener('click',()=>{
+    alert('Demo: gerçek ödeme entegrasyonu için Shopier veya iyzico kullan. Ödeme işleminden sonra "Siparişi Oluştur" butonunu kullanın.');
+    // Example: open a payment link (replace with your provider link)
+    window.open('https://shopier.com','_blank');
+  });
+
+  // Admin area (demo): admin password is 'admin123' (change!). In production secure this on server.
+  document.getElementById('openOrders').addEventListener('click',()=>{
+    const pw=prompt('Admin şifresi (demo):'); if(pw!=='admin123'){alert('Yetkisiz');return}
+    renderAdmin();
+  });
+  function renderAdmin(){
+    const area=document.getElementById('adminArea'); area.innerHTML=''; const orders=getOrders();
+    const wrap=document.createElement('div'); wrap.className='orders';
+    if(!orders.length){wrap.innerHTML='<div class="small">Henüz sipariş yok.</div>'}
+    orders.slice().reverse().forEach(o=>{
+      const el=document.createElement('div'); el.className='order';
+      el.innerHTML=`<div><strong>${o.title}</strong><div class="small">${o.desc}</div></div><div style="text-align:right"><div class="pill ${o.status==='pending'?'status-pending':o.status==='doing'?'status-doing':'status-done'}">${o.status}</div><div style="margin-top:8px"><button class='btn admin-accept' data-id='${o.id}'>Al/Çalışmaya Başla</button> <button class='btn admin-done' data-id='${o.id}'>Tamamla</button> <button class='btn admin-refund' data-id='${o.id}'>İade</button></div></div>`;
+      wrap.appendChild(el);
+    }); area.appendChild(wrap);
+    // attach handlers
+    document.querySelectorAll('.admin-accept').forEach(b=>b.addEventListener('click',e=>{changeStatus(e.target.dataset.id,'doing')}));
+    document.querySelectorAll('.admin-done').forEach(b=>b.addEventListener('click',e=>{changeStatus(e.target.dataset.id,'done')}));
+    document.querySelectorAll('.admin-refund').forEach(b=>b.addEventListener('click',e=>{if(confirm('Gerçek iade sürecini başlatmak istiyor musun? (demo)')){changeStatus(e.target.dataset.id,'refunded');alert('Müşteriye iade yap (ödeme sağlayıcın panelinden).')}}));
+  }
+  function changeStatus(id,s){const orders=getOrders(); const o=orders.find(x=>x.id===id); if(!o) return; o.status=s; saveOrders(orders); renderAdmin();}
+
+  document.getElementById('openAccounts').addEventListener('click',()=>{const u=getUsers(); alert('Kayıtlı hesap sayısı: '+u.length);})
+
+  // Simple UX: show current user in header
+  function refreshUser(){const cur=localStorage.getItem('ah_current'); if(cur) document.getElementById('loginBtn').textContent=cur}
+  refreshUser();
+
+</script>
+</body>
+</html>
