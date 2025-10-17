@@ -13,3 +13,20 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+// Kullanıcı kayıt işlemi
+const signupForm = document.getElementById("signupForm");
+if (signupForm) {
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = signupForm.querySelector('input[type="email"]').value;
+    const password = signupForm.querySelector('input[type="password"]').value;
+
+    try {
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      alert("Kayıt başarılı! Hoş geldin, " + email);
+      signupForm.reset();
+    } catch (error) {
+      alert("Hata: " + error.message);
+    }
+  });
+}
