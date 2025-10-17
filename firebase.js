@@ -30,3 +30,47 @@ if (signupForm) {
     }
   });
 }
+// Kullanıcı kayıt (sign up)
+const signupForm = document.getElementById("signupForm");
+if (signupForm) {
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = signupForm.querySelector('input[type="email"]').value;
+    const password = signupForm.querySelector('input[type="password"]').value;
+
+    try {
+      await auth.createUserWithEmailAndPassword(email, password);
+      alert("Kayıt başarılı! Şimdi giriş yapabilirsiniz.");
+      signupForm.reset();
+    } catch (error) {
+      alert("Hata: " + error.message);
+    }
+  });
+}
+
+// Kullanıcı giriş (login)
+const loginForm = document.getElementById("loginForm");
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = loginForm.querySelector('input[type="email"]').value;
+    const password = loginForm.querySelector('input[type="password"]').value;
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      alert("Giriş başarılı!");
+      loginForm.reset();
+    } catch (error) {
+      alert("Giriş hatası: " + error.message);
+    }
+  });
+}
+
+// Kullanıcı çıkışı
+const logoutBtn = document.getElementById("logoutBtn");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    await auth.signOut();
+    alert("Çıkış yapıldı!");
+  });
+}
