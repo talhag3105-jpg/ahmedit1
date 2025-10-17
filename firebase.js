@@ -89,3 +89,43 @@ if (logoutBtn) {
     alert("Çıkış yapıldı!");
   });
 }
+
+// Firestore veritabanı başlat
+const db = firebase.firestore();
+
+// Sipariş oluşturma
+const orderForm = document.getElementById("orderForm");
+if (orderForm) {
+  orderForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById("orderTitle").value;
+    const details = document.getElementById("orderDetails").value;
+    const style = document.getElementById("orderStyle").value;
+    const price = document.getElementById("orderPrice").value;
+    const user = auth.currentUser;
+
+    if (!user) {
+      alert("Lütfen önce giriş yapın.");
+      return;
+    }
+
+    try {
+      await db.collection("orders").add({
+        userId: user.uid,
+        email: user.email,
+        title,
+        details,
+        style,
+        price,
+        status: "Hazırlanıyor",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      alert("Sipariş başarıyla gönderildi!");
+      orderForm.reset();
+    } catch (error) {
+      alert("Sipariş gönderilirken hata: " + error.message);
+    }
+  });
+}
