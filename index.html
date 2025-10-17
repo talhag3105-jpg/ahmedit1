@@ -55,6 +55,21 @@
       <a class="btn" href="#contact">İletişim</a>
       <div class="theme-toggle btn" id="themeBtn">Tema</div>
       <a class="btn" id="loginBtn">Giriş / Kayıt</a>
+      <section class="order">
+  <h2>Sipariş Oluştur</h2>
+  <form id="orderForm">
+    <input type="text" id="orderTitle" placeholder="Sipariş Başlığı" required>
+    <textarea id="orderDetails" placeholder="Nasıl bir edit istiyorsunuz?" required></textarea>
+    <select id="orderStyle" required>
+      <option value="">Tarz seçin</option>
+      <option value="renkli">Renkli</option>
+      <option value="sinematik">Sinematik</option>
+      <option value="minimal">Minimal</option>
+    </select>
+    <input type="number" id="orderPrice" placeholder="Fiyat (₺)" required>
+    <button type="submit">Siparişi Gönder</button>
+  </form>
+</section>
     </nav>
   </header>
   <main>
