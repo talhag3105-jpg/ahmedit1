@@ -130,38 +130,15 @@
         <div class="small">Instagram: (sonra eklenecek)</div>
       </div>
     </section>
-    .signup {
-  background: var(--card);
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 400px;
-  margin: 30px auto;
-}
-
-.signup h2 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.signup input {
-  padding: 10px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-}
-
-.signup button {
-  background: var(--accent);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.signup button:hover {
-  opacity: 0.8;
-}
+   section class="signup">
+    <h2>Hesap Oluştur</h2>
+    <form id="signupForm">
+      <input type="text" placeholder="Kullanıcı Adı" required>
+      <input type="email" placeholder="E-posta" required>
+      <input type="password" placeholder="Şifre" required>
+      <button type="submit">Kayıt Ol</button>
+    </form>
+  </section>
   </main>
   <footer>
     Ahmedit — © <span id="year"></span> · Demo prototip. Ödeme entegrasyonu için Shopier veya iyzico gibi sağlayıcılar kullan.
